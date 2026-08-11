@@ -421,9 +421,9 @@
   .smb .smb-lede{font-size:16.5px;max-width:34ch}
   .smb .smb-lede br{display:none}
   .smb .smb-hgrid{grid-template-columns:1fr;gap:34px}
-  .smb .smb-stackwrap{height:451px;margin-top:0;overflow:hidden}
-  .smb .smb-stack2{transform:scale(.74);transform-origin:top center;
-    margin-left:calc((100% - 494px)/2);margin-right:0}
+  .smb .smb-stackwrap{height:537px;margin:0 -26px;overflow:hidden}
+  .smb .smb-stack2{width:440px;transform:scale(.90);transform-origin:top center;
+    margin-left:calc((100% - 440px)/2);margin-right:0}
   .smb .smb-g-half{padding:22px 15px 24px}
   .smb .smb-g-half .smb-rl{font-size:9.5px;letter-spacing:.08em;margin-bottom:14px}
   .smb .smb-g-face{display:block;margin-bottom:16px}
@@ -459,8 +459,8 @@
   .smb h1{font-size:46px}
   .smb h2{font-size:27px}
   .smb .smb-close h2{font-size:29px}
-  .smb .smb-stackwrap{height:431px}
-  .smb .smb-stack2{transform:scale(.72)}
+  .smb .smb-stackwrap{height:513px;margin:0 -20px}
+  .smb .smb-stack2{transform:scale(.86)}
   .smb .smb-demo,.smb .smb-pane-a,.smb .smb-pane-b,.smb .smb-pane-a.smb-back,.smb .smb-pane-b.smb-live{
     box-shadow:0 0 0 1px rgba(21,21,21,.10)}
   .smb .smb-dinput{box-shadow:0 0 0 1px rgba(21,21,21,.10)}
@@ -472,23 +472,23 @@
 }
 @media (max-width:400px){
   .smb h1{font-size:42px}
-  .smb .smb-stack2{transform:scale(.68)}
-  .smb .smb-stackwrap{height:407px}
+  .smb .smb-stack2{transform:scale(.81)}
+  .smb .smb-stackwrap{height:484px}
 }
 @media (max-width:380px){
-  .smb .smb-stack2{transform:scale(.64)}
-  .smb .smb-stackwrap{height:384px}
+  .smb .smb-stack2{transform:scale(.77)}
+  .smb .smb-stackwrap{height:460px;margin:0 -16px}
   .smb .smb-wrap{padding:0 16px}
   .smb .smb-lede{max-width:32ch}
   .smb h1{font-size:38px}
 }
 @media (max-width:360px){
-  .smb .smb-stack2{transform:scale(.58)}
-  .smb .smb-stackwrap{height:349px}
+  .smb .smb-stack2{transform:scale(.72)}
+  .smb .smb-stackwrap{height:431px}
 }
 @media (max-width:340px){
-  .smb .smb-stack2{transform:scale(.54)}
-  .smb .smb-stackwrap{height:325px}
+  .smb .smb-stack2{transform:scale(.68)}
+  .smb .smb-stackwrap{height:407px}
 }
 @media (prefers-reduced-motion:reduce){
   .smb,.smb *{transition:none!important;animation:none!important;scroll-behavior:auto}
