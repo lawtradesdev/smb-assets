@@ -81,25 +81,37 @@
     [].slice.call(g('smb-a4').querySelectorAll('.smb-r')).forEach(function(r){ r.classList.add('smb-on'); });
     return;
   }
-  resetAll();
+  /* Two drivers, because the two layouts need different behaviour.
 
-  /* Stacked on a phone the four cards are taller than the screen, so a timed
-     carousel means the live card is usually the one you cannot see. Below the
-     stacking breakpoint the card you are looking at is the live one: whichever
-     is most in view takes over, the previous one resets, and scrolling back
-     replays it from the start. */
-  if(window.matchMedia('(max-width:900px)').matches){
-    var cur=-1, ratio=[];
-    function activate(i){
-      if(i===cur) return;
-      stop();                                   // cancel the outgoing card's timers
-      if(cur>=0){ clear(cur); cards[cur].classList.remove('smb-active'); }
-      cur=i;
-      clear(i);
-      cards[i].classList.add('smb-active');
-      play(i);
-    }
-    var ob=new IntersectionObserver(function(es){
+     Wide: all four cards are on screen at once, so a timed cycle makes sense.
+     Stacked: the cards are taller than the screen, so the live card is simply
+     the one you are looking at. Whichever is most in view takes over, the
+     previous one resets, and scrolling back replays it.
+
+     The choice is re-made whenever the breakpoint is crossed, so resizing the
+     window swaps the driver instead of leaving the wrong one running. */
+  var mq=window.matchMedia('(max-width:900px)');
+  var obs=null, cur=-1, ratio=[];
+
+  function teardown(){
+    stop();
+    if(obs){ obs.disconnect(); obs=null; }
+    resetAll();
+    cur=-1; idx=0; ratio=[];
+  }
+
+  function activate(i){
+    if(i===cur) return;
+    stop();                                   // cancel the outgoing card's timers
+    if(cur>=0){ clear(cur); cards[cur].classList.remove('smb-active'); }
+    cur=i;
+    clear(i);
+    cards[i].classList.add('smb-active');
+    play(i);
+  }
+
+  function startStacked(){
+    obs=new IntersectionObserver(function(es){
       es.forEach(function(e){
         var i=cards.indexOf(e.target);
         if(i>=0) ratio[i]=e.isIntersecting ? e.intersectionRatio : 0;
@@ -108,16 +120,24 @@
       for(var i=0;i<cards.length;i++){
         if((ratio[i]||0) > top){ top=ratio[i]; best=i; }
       }
-      if(best>=0 && top>=.35) activate(best);   // a gate, so it cannot flicker
+      if(best>=0 && top>=.35) activate(best);  // a gate, so it cannot flicker
     },{threshold:[0,.15,.3,.45,.6,.8,1]});
-    cards.forEach(function(c){ ob.observe(c); });
-  } else {
-    new IntersectionObserver(function(es){
+    cards.forEach(function(c){ obs.observe(c); });
+  }
+
+  function startWide(){
+    obs=new IntersectionObserver(function(es){
       es.forEach(function(e){
         if(e.isIntersecting){ if(!running){ running=true; idx=0; step(); } } else { stop(); }
       });
-    },{threshold:.25}).observe(f);
+    },{threshold:.25});
+    obs.observe(f);
   }
+
+  function apply(){ teardown(); if(mq.matches) startStacked(); else startWide(); }
+  apply();
+  if(mq.addEventListener) mq.addEventListener('change', apply);
+  else if(mq.addListener) mq.addListener(apply);
 })();
 
 /* ---- hero demo animation ---- */
