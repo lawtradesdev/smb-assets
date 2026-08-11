@@ -28,10 +28,8 @@
   function resetAll(){ for(var i=0;i<4;i++) clear(i); cards.forEach(function(c){ c.classList.remove('smb-active'); }); }
 
   var HOLD=[4900,3400,3900,4200];
-  function step(){
-    resetAll();
-    var i=idx;
-    cards[i].classList.add('smb-active');
+  /* one step's sequence, with no opinion about what comes next */
+  function play(i){
     if(i===0){
       var Q1='I need a lawyer to review a contract';
       for(var k=1;k<=Q1.length;k++){
@@ -64,6 +62,12 @@
         }, 46);
       });
     }
+  }
+  function step(){
+    resetAll();
+    var i=idx;
+    cards[i].classList.add('smb-active');
+    play(i);
     at(HOLD[i], function(){ if(running){ idx=(idx+1)%4; step(); } });
   }
 
@@ -78,11 +82,31 @@
     return;
   }
   resetAll();
-  new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(e.isIntersecting){ if(!running){ running=true; idx=0; step(); } } else { stop(); }
-    });
-  },{threshold:.25}).observe(f);
+
+  /* Stacked on a phone, the four cards are taller than the screen, so a timed
+     carousel means the live card is usually the one you cannot see. Below the
+     stacking breakpoint each card plays once, when you scroll to it. */
+  if(window.matchMedia('(max-width:900px)').matches){
+    var done=[];
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var i=cards.indexOf(e.target);
+        if(i<0 || done[i]) return;
+        done[i]=true;
+        e.target.classList.add('smb-active');
+        play(i);
+        io.unobserve(e.target);
+      });
+    },{threshold:.45});
+    cards.forEach(function(c){ io.observe(c); });
+  } else {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ if(!running){ running=true; idx=0; step(); } } else { stop(); }
+      });
+    },{threshold:.25}).observe(f);
+  }
 })();
 
 /* ---- hero demo animation ---- */
