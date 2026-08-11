@@ -83,23 +83,34 @@
   }
   resetAll();
 
-  /* Stacked on a phone, the four cards are taller than the screen, so a timed
+  /* Stacked on a phone the four cards are taller than the screen, so a timed
      carousel means the live card is usually the one you cannot see. Below the
-     stacking breakpoint each card plays once, when you scroll to it. */
+     stacking breakpoint the card you are looking at is the live one: whichever
+     is most in view takes over, the previous one resets, and scrolling back
+     replays it from the start. */
   if(window.matchMedia('(max-width:900px)').matches){
-    var done=[];
-    var io=new IntersectionObserver(function(es){
+    var cur=-1, ratio=[];
+    function activate(i){
+      if(i===cur) return;
+      stop();                                   // cancel the outgoing card's timers
+      if(cur>=0){ clear(cur); cards[cur].classList.remove('smb-active'); }
+      cur=i;
+      clear(i);
+      cards[i].classList.add('smb-active');
+      play(i);
+    }
+    var ob=new IntersectionObserver(function(es){
       es.forEach(function(e){
-        if(!e.isIntersecting) return;
         var i=cards.indexOf(e.target);
-        if(i<0 || done[i]) return;
-        done[i]=true;
-        e.target.classList.add('smb-active');
-        play(i);
-        io.unobserve(e.target);
+        if(i>=0) ratio[i]=e.isIntersecting ? e.intersectionRatio : 0;
       });
-    },{threshold:.45});
-    cards.forEach(function(c){ io.observe(c); });
+      var best=-1, top=0;
+      for(var i=0;i<cards.length;i++){
+        if((ratio[i]||0) > top){ top=ratio[i]; best=i; }
+      }
+      if(best>=0 && top>=.35) activate(best);   // a gate, so it cannot flicker
+    },{threshold:[0,.15,.3,.45,.6,.8,1]});
+    cards.forEach(function(c){ ob.observe(c); });
   } else {
     new IntersectionObserver(function(es){
       es.forEach(function(e){
