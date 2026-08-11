@@ -12,51 +12,51 @@
 
   function clear(i){
     if(i===0){
-      g('smb-t1').textContent=''; g('smb-cr1').classList.remove('off'); g('smb-sd1').classList.remove('on');
-      g('smb-sn1').classList.remove('on'); g('smb-rp1').classList.remove('on');
+      g('smb-t1').textContent=''; g('smb-cr1').classList.remove('smb-off'); g('smb-sd1').classList.remove('smb-on');
+      g('smb-sn1').classList.remove('smb-on'); g('smb-rp1').classList.remove('smb-on');
     }
-    if(i===0){ g('smb-p1').classList.remove('on'); g('smb-a1').classList.remove('dim'); }
-    if(i===1){ g('smb-a2').classList.remove('on'); g('smb-p2').classList.remove('on'); }
-    if(i===2){ g('smb-a3').classList.remove('on'); g('smb-st').classList.remove('on');
-      g('smb-p3').classList.remove('on'); }
+    if(i===0){ g('smb-p1').classList.remove('smb-on'); g('smb-a1').classList.remove('smb-dim'); }
+    if(i===1){ g('smb-a2').classList.remove('smb-on'); g('smb-p2').classList.remove('smb-on'); }
+    if(i===2){ g('smb-a3').classList.remove('smb-on'); g('smb-st').classList.remove('smb-on');
+      g('smb-p3').classList.remove('smb-on'); }
     if(i===3){
-      [].slice.call(g('smb-a4').querySelectorAll('.r')).forEach(function(r){ r.classList.remove('on'); });
-      g('smb-a4t').classList.remove('on'); g('smb-p4').textContent='0.0 hr';
-      g('smb-p5').classList.remove('on');
+      [].slice.call(g('smb-a4').querySelectorAll('.r')).forEach(function(r){ r.classList.remove('smb-on'); });
+      g('smb-a4t').classList.remove('smb-on'); g('smb-p4').textContent='0.0 hr';
+      g('smb-p5').classList.remove('smb-on');
     }
   }
-  function resetAll(){ for(var i=0;i<4;i++) clear(i); cards.forEach(function(c){ c.classList.remove('active'); }); }
+  function resetAll(){ for(var i=0;i<4;i++) clear(i); cards.forEach(function(c){ c.classList.remove('smb-active'); }); }
 
   var HOLD=[4900,3400,3900,4200];
   function step(){
     resetAll();
     var i=idx;
-    cards[i].classList.add('active');
+    cards[i].classList.add('smb-active');
     if(i===0){
       var Q1='I need a lawyer to review a contract';
       for(var k=1;k<=Q1.length;k++){
         (function(n){ at(220+n*26, function(){ g('smb-t1').textContent=Q1.slice(0,n); }); })(k);
       }
-      at(220+Q1.length*26+180, function(){ g('smb-sd1').classList.add('on'); });
+      at(220+Q1.length*26+180, function(){ g('smb-sd1').classList.add('smb-on'); });
       at(220+Q1.length*26+560, function(){
-        g('smb-sn1').classList.add('on'); g('smb-t1').textContent=''; g('smb-cr1').classList.add('off');
-        g('smb-sd1').classList.remove('on');
+        g('smb-sn1').classList.add('smb-on'); g('smb-t1').textContent=''; g('smb-cr1').classList.add('smb-off');
+        g('smb-sd1').classList.remove('smb-on');
       });
-      at(220+Q1.length*26+1150, function(){ g('smb-rp1').classList.add('on'); });
-      at(220+Q1.length*26+1450, function(){ g('smb-a1').classList.add('dim'); });
-      at(220+Q1.length*26+1650, function(){ g('smb-p1').classList.add('on'); });
+      at(220+Q1.length*26+1150, function(){ g('smb-rp1').classList.add('smb-on'); });
+      at(220+Q1.length*26+1450, function(){ g('smb-a1').classList.add('smb-dim'); });
+      at(220+Q1.length*26+1650, function(){ g('smb-p1').classList.add('smb-on'); });
     }
-    if(i===1){ at(320,function(){ g('smb-a2').classList.add('on'); }); at(1100,function(){ g('smb-p2').classList.add('on'); }); }
+    if(i===1){ at(320,function(){ g('smb-a2').classList.add('smb-on'); }); at(1100,function(){ g('smb-p2').classList.add('smb-on'); }); }
     if(i===2){
-      at(240,function(){ g('smb-a3').classList.add('on'); });
-      at(1050,function(){ g('smb-st').classList.add('on'); });
-      at(1500,function(){ g('smb-p3').classList.add('on'); });
+      at(240,function(){ g('smb-a3').classList.add('smb-on'); });
+      at(1050,function(){ g('smb-st').classList.add('smb-on'); });
+      at(1500,function(){ g('smb-p3').classList.add('smb-on'); });
     }
     if(i===3){
       var rows=[].slice.call(g('smb-a4').querySelectorAll('.r'));
-      rows.forEach(function(r,k){ at(240+k*340, function(){ r.classList.add('on'); }); });
-      at(1200, function(){ g('smb-a4t').classList.add('on'); });
-      at(1700, function(){ g('smb-p5').classList.add('on'); });
+      rows.forEach(function(r,k){ at(240+k*340, function(){ r.classList.add('smb-on'); }); });
+      at(1200, function(){ g('smb-a4t').classList.add('smb-on'); });
+      at(1700, function(){ g('smb-p5').classList.add('smb-on'); });
       at(1300, function(){
         var v=0, iv=setInterval(function(){
           v+=0.2; if(v>=3){ v=3; clearInterval(iv); }
@@ -68,13 +68,13 @@
   }
 
   if(reduce){
-    cards.forEach(function(c){ c.classList.add('active'); });
-    g('smb-cr1').classList.add('off'); g('smb-sn1').classList.add('on'); g('smb-rp1').classList.add('on');
-    ['smb-a2','smb-a3'].forEach(function(i){ g(i).classList.add('on'); });
-    ['smb-p1','smb-p2','smb-p3','smb-p5','smb-st'].forEach(function(i){ g(i).classList.add('on'); });
-    g('smb-a1').classList.add('dim');
-    g('smb-a4t').classList.add('on'); g('smb-p4').textContent='3.0 hr';
-    [].slice.call(g('smb-a4').querySelectorAll('.r')).forEach(function(r){ r.classList.add('on'); });
+    cards.forEach(function(c){ c.classList.add('smb-active'); });
+    g('smb-cr1').classList.add('smb-off'); g('smb-sn1').classList.add('smb-on'); g('smb-rp1').classList.add('smb-on');
+    ['smb-a2','smb-a3'].forEach(function(i){ g(i).classList.add('smb-on'); });
+    ['smb-p1','smb-p2','smb-p3','smb-p5','smb-st'].forEach(function(i){ g(i).classList.add('smb-on'); });
+    g('smb-a1').classList.add('smb-dim');
+    g('smb-a4t').classList.add('smb-on'); g('smb-p4').textContent='3.0 hr';
+    [].slice.call(g('smb-a4').querySelectorAll('.r')).forEach(function(r){ r.classList.add('smb-on'); });
     return;
   }
   resetAll();
@@ -98,97 +98,97 @@
   function at(ms,fn){ timers.push(setTimeout(fn,ms)); }
 
   function add(html,cls){
-    var d=document.createElement('div'); d.className='it '+(cls||''); d.innerHTML=html;
-    stage.appendChild(d); requestAnimationFrame(function(){ d.classList.add('in'); });
+    var d=document.createElement('div'); d.className='smb-it '+(cls||''); d.innerHTML=html;
+    stage.appendChild(d); requestAnimationFrame(function(){ d.classList.add('smb-in'); });
     return d;
   }
   var CARD =
-    '<div class="lcard">'+
-      '<div class="lwhy">+ <b>Avery</b> negotiates liability and IP terms on customer contracts.</div>'+
-      '<div class="lmain">'+
-        '<span class="lph"></span>'+
+    '<div class="smb-lcard">'+
+      '<div class="smb-lwhy">+ <b>Avery</b> negotiates liability and IP terms on customer contracts.</div>'+
+      '<div class="smb-lmain">'+
+        '<span class="smb-lph"></span>'+
         '<span style="flex:1">'+
-          '<span class="lname">Avery R. <i>&check;</i></span>'+
-          '<span class="lrole">Commercial attorney</span>'+
-          '<span class="lnums">'+
+          '<span class="smb-lname">Avery R. <i>&check;</i></span>'+
+          '<span class="smb-lrole">Commercial attorney</span>'+
+          '<span class="smb-lnums">'+
             '<div><b>18</b><span>ENGAGEMENTS</span></div>'+
             '<div><b>9 yrs</b><span>PRACTICE</span></div>'+
           '</span>'+
         '</span>'+
       '</div>'+
-      '<div class="lfoot"><span class="vp">View profile</span><span class="hire" id="smb-hire">Hire Avery</span></div>'+
+      '<div class="smb-lfoot"><span class="smb-vp">View profile</span><span class="smb-hire" id="smb-hire">Hire Avery</span></div>'+
     '</div>';
   var SKEL =
-    '<div class="sk">'+
-      '<span class="b" style="width:44px;height:50px;flex:0 0 44px"></span>'+
+    '<div class="smb-sk">'+
+      '<span class="smb-b" style="width:44px;height:50px;flex:0 0 44px"></span>'+
       '<span style="flex:1">'+
-        '<span class="b" style="display:block;width:44%;height:13px;margin-bottom:9px"></span>'+
-        '<span class="b" style="display:block;width:30%;height:10px;margin-bottom:16px"></span>'+
-        '<span class="b" style="display:block;width:70%;height:10px"></span>'+
+        '<span class="smb-b" style="display:block;width:44%;height:13px;margin-bottom:9px"></span>'+
+        '<span class="smb-b" style="display:block;width:30%;height:10px;margin-bottom:16px"></span>'+
+        '<span class="smb-b" style="display:block;width:70%;height:10px"></span>'+
       '</span>'+
     '</div>';
 
-  var GREET='<div class="it in"><div class="atx greet">Tell me what you need. '+
+  var GREET='<div class="smb-it in"><div class="smb-atx greet">Tell me what you need. '+
     'I&rsquo;ll find a vetted attorney and stay on the matter.</div></div>';
 
   function reset(){
     stage.innerHTML=GREET; typed.textContent='Search for legal talent, ask a question, or drop in a contract';
-    typed.classList.add('ph2'); caret.classList.add('off');
-    send.className='send';
-    ['smb-c1','smb-c2','smb-c3','smb-rl1','smb-rl2'].forEach(function(i){var x=document.getElementById(i); if(x) x.classList.remove('on');});
-    room.classList.remove('live'); demo.classList.remove('back');
+    typed.classList.add('smb-ph2'); caret.classList.add('smb-off');
+    send.className='smb-send';
+    ['smb-c1','smb-c2','smb-c3','smb-rl1','smb-rl2'].forEach(function(i){var x=document.getElementById(i); if(x) x.classList.remove('smb-on');});
+    room.classList.remove('smb-live'); demo.classList.remove('smb-back');
   }
 
   function run(){
     reset();
     var t=420;
-    at(t, function(){ typed.textContent=''; typed.classList.remove('ph2'); caret.classList.remove('off'); });
+    at(t, function(){ typed.textContent=''; typed.classList.remove('smb-ph2'); caret.classList.remove('smb-off'); });
     for(var i=1;i<=Q.length;i++){
       (function(n){ at(t+120+n*34, function(){ typed.textContent=Q.slice(0,n); }); })(i);
     }
     var e=t+120+Q.length*34;
-    at(e+200, function(){ send.classList.add('on'); });
-    at(e+520, function(){ send.classList.add('press'); });
+    at(e+200, function(){ send.classList.add('smb-on'); });
+    at(e+520, function(){ send.classList.add('smb-press'); });
     at(e+660, function(){
-      caret.classList.add('off');
-      add('<div class="ubub">'+Q+'</div>','me');
+      caret.classList.add('smb-off');
+      add('<div class="smb-ubub">'+Q+'</div>','smb-me');
       typed.textContent='Search for legal talent, ask a question, or drop in a contract';
-      typed.classList.add('ph2'); send.className='send';
+      typed.classList.add('smb-ph2'); send.className='smb-send';
     });
-    at(e+940, function(){ add('<div class="dots"><i></i><i></i><i></i></div>','dotwrap'); });
+    at(e+940, function(){ add('<div class="smb-dots"><i></i><i></i><i></i></div>','dotwrap'); });
     at(e+1700, function(){
-      var d=document.querySelector('.smb .dotwrap'); if(d) d.remove();
-      add('<div class="atx">Avery has done this for SaaS companies and can start today.</div>');
+      var d=document.querySelector('.dotwrap'); if(d) d.remove();
+      add('<div class="smb-atx">Avery has done this for SaaS companies and can start today.</div>');
     });
-    at(e+2200, function(){ add('<div class="stat">Matching against the bench...</div>','statwrap'); });
+    at(e+2200, function(){ add('<div class="smb-stat">Matching against the bench...</div>','statwrap'); });
     at(e+2600, function(){ add(SKEL,'skwrap'); });
     at(e+3800, function(){
-      var k=document.querySelector('.smb .skwrap'); if(k) k.remove();
-      var st=document.querySelector('.smb .statwrap'); if(st) st.remove();
+      var k=document.querySelector('.skwrap'); if(k) k.remove();
+      var st=document.querySelector('.statwrap'); if(st) st.remove();
       add(CARD);
     });
-    at(e+4600, function(){ var h=document.getElementById('smb-hire'); if(h) h.classList.add('press'); });
+    at(e+4600, function(){ var h=document.getElementById('smb-hire'); if(h) h.classList.add('smb-press'); });
     at(e+5450, function(){
-      var h=document.getElementById('smb-hire'); if(h) h.classList.remove('press');
-      room.classList.add('live');
-      demo.classList.add('back');
+      var h=document.getElementById('smb-hire'); if(h) h.classList.remove('smb-press');
+      room.classList.add('smb-live');
+      demo.classList.add('smb-back');
     });
     /* ---- the room wakes up: three of you, and the lawyer starts ---- */
-    at(e+5800, function(){ var x=document.getElementById('smb-c1'); if(x) x.classList.add('on'); });
-    at(e+6250, function(){ var x=document.getElementById('smb-c2'); if(x) x.classList.add('on'); });
-    at(e+6700, function(){ var x=document.getElementById('smb-c3'); if(x) x.classList.add('on'); });
-    at(e+7500, function(){ var x=document.getElementById('smb-rl1'); if(x) x.classList.add('on'); });
-    at(e+8700, function(){ var x=document.getElementById('smb-rl2'); if(x) x.classList.add('on'); });
+    at(e+5800, function(){ var x=document.getElementById('smb-c1'); if(x) x.classList.add('smb-on'); });
+    at(e+6250, function(){ var x=document.getElementById('smb-c2'); if(x) x.classList.add('smb-on'); });
+    at(e+6700, function(){ var x=document.getElementById('smb-c3'); if(x) x.classList.add('smb-on'); });
+    at(e+7500, function(){ var x=document.getElementById('smb-rl1'); if(x) x.classList.add('smb-on'); });
+    at(e+8700, function(){ var x=document.getElementById('smb-rl2'); if(x) x.classList.add('smb-on'); });
     at(e+14800, function(){ run(); });
   }
 
   if(reduce){
     stage.innerHTML=GREET;
-    typed.textContent=Q; typed.classList.remove('ph2'); send.classList.add('on');
-    add('<div class="atx">Avery has done this for SaaS companies and can start today.</div>');
+    typed.textContent=Q; typed.classList.remove('smb-ph2'); send.classList.add('smb-on');
+    add('<div class="smb-atx">Avery has done this for SaaS companies and can start today.</div>');
     add(CARD);
-    room.classList.add('live');
-    ['smb-c1','smb-c2','smb-c3','smb-rl1','smb-rl2'].forEach(function(i){var x=document.getElementById(i); if(x) x.classList.add('on');});
+    room.classList.add('smb-live');
+    ['smb-c1','smb-c2','smb-c3','smb-rl1','smb-rl2'].forEach(function(i){var x=document.getElementById(i); if(x) x.classList.add('smb-on');});
   } else {
     var seen=false;
     new IntersectionObserver(function(es){
@@ -198,7 +198,7 @@
 })();
 
 function smbFaq(b){
-  var q=b.parentElement, open=q.classList.contains('open');
-  document.querySelectorAll('.smb .qa').forEach(function(x){ x.classList.remove('open'); });
-  if(!open){ q.classList.add('open'); }
+  var q=b.parentElement, open=q.classList.contains('smb-open');
+  document.querySelectorAll('.qa').forEach(function(x){ x.classList.remove('smb-open'); });
+  if(!open){ q.classList.add('smb-open'); }
 }
